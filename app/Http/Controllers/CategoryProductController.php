@@ -14,8 +14,13 @@ class CategoryProductController extends Controller
      */
     public function index()
     {
-        //
+        $title = "Category Products";
+        
+        $categoryProducts = CategoryProduct::all();
+        return view('CategoryProduct.index')
+        ->with('categoryProducts', $categoryProducts);
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -35,9 +35,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         'as' => 'products.view'
         ]
     );
-    Route::get('/add-products', [
-        'uses' => 'ProductController@addProductView',
-        'as' => 'add.products.view'
+    
+    // Route::get('/add-products', [
+    //     'uses' => 'ProductController@addProductView',
+    //     'as' => 'add.products.view'
+    //     ]
+    // );
+    
+    Route::post('/adding-product', [
+        'uses' => 'ProductController@addingProduct',
+        'as' => 'adding.product'
         ]
     );
     
@@ -47,5 +54,19 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         'as' => 'edit.product.view'
         ]
     );
+
+    // Category Product
+    Route::get('/category-products', [
+        'uses' => 'CategoryProductController@index',
+        'as' => 'category.products.view'
+        ]
+    );
+    Route::post('/adding-category_product', [
+        'uses' => 'CategoryProductController@addingCategory',
+        'as' => 'adding.category_product'
+        ]
+    );
+
+   
 
 });

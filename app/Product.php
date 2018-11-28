@@ -13,7 +13,11 @@ class Product extends Model
 
 
     public function categoryProduct(){
-        return $this->hasOne('App\CategoryProduct');
+        return $this->belongsTo('App\CategoryProduct');
+    }
+
+    public function supplier(){
+        return $this->belongsTo('App\Supplier');
     }
 
 }

@@ -18,7 +18,6 @@ class CreateCategoryProductsTable extends Migration
             $table->string('name');
             $table->integer('parent_id');
             $table->text('description');
-            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }
