@@ -92,7 +92,7 @@
                 <div class="modal-footer">
                     <div class="form-group float-right">
                         <a href="{{ route('products.view')}}" type="button" class="btn btn-secondary" data-dismiss="modal">Back</a>
-                        <input type="submit" class="btn btn-primary" id="" value="Submit">
+                        <input type="submit" class="btn btn-primary" id="" value="Update">
                     </div>
                 </div>
             </form>

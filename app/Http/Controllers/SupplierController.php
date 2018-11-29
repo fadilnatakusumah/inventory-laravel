@@ -72,13 +72,14 @@ class SupplierController extends Controller
 
         if ($checkValid->fails()) {
             Session::flash('fail', 'Fail adding new supplier');
-            return redirect()->route('suppliers.view');
+            return redirect()->route('suppliers.view')
+            ->withErrors($checkValid)
+            ->withInput();
         } else {
             $editSupplier->name = $request->name;
             $editSupplier->address = $request->address;
             $editSupplier->phone = $request->phone;
             $editSupplier->description = $request->description;
-
             $editSupplier->save();
 
             Session::flash('success', 'Supplier successfully edited');

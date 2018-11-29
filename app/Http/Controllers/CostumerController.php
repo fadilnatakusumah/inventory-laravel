@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Costumer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CostumerController extends Controller
 {
@@ -14,7 +16,101 @@ class CostumerController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Costumers';
+        $costumers = Costumer::all();
+
+        return view('CostumerViews.index')
+        ->with('title', $title)
+        ->with('costumers', $costumers);
+    }
+
+    public function addingCostumer(Request $req){
+        $checkValid = Validator::make($req->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+            'birthday' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'status' => 'required',
+        ]);
+
+        if($checkValid->fails()){
+            Session::flash('fail', 'Fail when adding new Costumer');
+            return redirect()->route('costumers.view')
+            ->withErrors($checkValid)
+            ->withInput();
+        }else{
+            $newCostumer = Costumer::create([
+                'name' => $req->name,
+                'email' => $req->email,
+                'address' => $req->address,
+                'phone' => $req->phone,
+                'birthday' => $req->birthday,
+                'country' => $req->country,
+                'state' => $req->state,
+                'city' => $req->city,
+                'status' => $req->status,
+            ]);
+            
+            Session::flash('success', 'Success adding new Costumer');
+            return redirect()->route('costumers.view');
+        }
+    }
+
+    public function editCostumerView($id){
+        $title = "Edit Costumer";
+        $costumer = Costumer::find($id);
+
+        return view('CostumerViews.edit')
+        ->with('title', $title)
+        ->with('costumer', $costumer);
+    }
+
+    public function editingCostumer(Request $req){
+        $costumer = Costumer::find($req->id);
+        $checkValid = Validator::make($req->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'phone' => 'required|numeric',
+            'birthday' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'status' => 'required',
+        ]);
+
+        if($checkValid->fails()){
+            Session::flash('fail', 'Fail when updating Costumer');
+            return redirect()->route('costumers.view')
+            ->withErrors($checkValid)
+            ->withInput();
+        }else{
+            $costumer->name = $req->name;
+            $costumer->email = $req->email;
+            $costumer->address = $req->address;
+            $costumer->phone = $req->phone;
+            $costumer->birthday = $req->birthday;
+            $costumer->country = $req->country;
+            $costumer->state = $req->state;
+            $costumer->city = $req->city;
+            $costumer->status = $req->status;
+            $costumer->save();
+            
+            Session::flash('success', 'Success updating Costumer');
+            return redirect()->route('costumers.view');
+        }
+    }
+
+    public function deletingCostumer($id){
+        $deleteCostumer = Costumer::find($id);
+        $deleteCostumer->delete();
+
+        Session::flash('success', 'Success deleting Costumer');
+        return redirect()->route('costumers.view');
     }
 
     /**

@@ -8,7 +8,7 @@ class Costumer extends Model
 {
     //
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone', 'birthday', 'country', 'state', 'city', 'status'
+        'name', 'email', 'address', 'phone', 'birthday', 'country', 'state', 'city', 'status'
     ];
 
     

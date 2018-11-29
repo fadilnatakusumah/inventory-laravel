@@ -134,6 +134,38 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         'uses' => 'SupplierController@deletingSupplier'
     ]);
 
+    // Costumers route =========== //
+    Route::get('/costumers', [
+        'uses' => 'CostumerController@index',
+        'as' => 'costumers.view'
+        ]
+    );
+
+    // add new costumer
+    Route::post('/adding-costumer', [
+        'uses' => 'CostumerController@addingCostumer',
+        'as' => 'adding.costumer'
+        ]
+    );
+
+    // edit costumers view
+    Route::get('/edit-costumer/{id}', [
+        'as' => 'edit.costumer.view',
+        'uses' => 'CostumerController@editCostumerView'
+    ]);
+
+    // save edit costumer
+    Route::post('/editing-costumer/', [
+        'as' => 'editing.costumer',
+        'uses' => 'CostumerController@editingCostumer'
+    ]);
+
+    // deleting costumer
+    Route::get('/deleting-costumer/{id}', [
+        'as'=>'deleting.costumer',
+        'uses' => 'CostumerController@deletingCostumer'
+    ]);
+
 
    
 

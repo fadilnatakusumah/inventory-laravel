@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="nav-item  @if(Route::is('costumers.view')) {{'active'}} @endif">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('costumers.view') }}">
                     Costumers
                 </a>
             </li>
