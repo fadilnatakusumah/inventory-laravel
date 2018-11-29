@@ -72,10 +72,10 @@
                     </td>
                     <td>{{$product->stock}}</td>
                     <td>
-                        <a href="{{ route('deleting.products', ['id' => $product->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger" style="width: 100px;">
+                        <a href="{{ route('deleting.products', ['id' => $product->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger actions-btn">
                             Delete
                         </a>
-                        <a type="button" href="{{ route('edit.product.view', ['id' => $product->id]) }}" class="btn btn-sm btn-info" style="width: 100px;">
+                        <a type="button" href="{{ route('edit.product.view', ['id' => $product->id]) }}" class="btn btn-sm btn-info actions-btn">
                             Edit
                         </a>
                     </td>

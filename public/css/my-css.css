@@ -11,3 +11,7 @@ nav.bg-primary {
 .required{
     color: red;
 }
+
+.actions-btn{
+    width: 100px;
+}

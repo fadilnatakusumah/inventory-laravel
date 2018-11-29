@@ -95,10 +95,45 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         'uses' => 'CategoryProductController@editingCategory'
     ]);
 
+    // deleting category
     Route::get('/deleting-category-product/{id}', [
         'as'=>'deleting.categoryProduct',
         'uses' => 'CategoryProductController@deletingCategoryProduct'
     ]);
+
+
+    // Suppliers route
+    Route::get('/suppliers', [
+        'uses' => 'SupplierController@index',
+        'as' => 'suppliers.view'
+        ]
+    );
+
+    // add new suppliers
+    Route::post('/adding-supplier', [
+        'uses' => 'SupplierController@addingSupplier',
+        'as' => 'adding.supplier'
+        ]
+    );
+
+    // edit suppliers view
+    Route::get('/edit-supplier/{id}', [
+        'as' => 'edit.supplier.view',
+        'uses' => 'SupplierController@editSupplierView'
+    ]);
+
+    // save edit supplier
+    Route::post('/editing-supplier/', [
+        'as' => 'editing.supplier',
+        'uses' => 'SupplierController@editingSupplier'
+    ]);
+
+    // deleting supplier
+    Route::get('/deleting-supplier/{id}', [
+        'as'=>'deleting.supplier',
+        'uses' => 'SupplierController@deletingSupplier'
+    ]);
+
 
    
 

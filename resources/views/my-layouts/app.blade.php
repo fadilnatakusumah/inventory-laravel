@@ -26,12 +26,12 @@
                 <a class="nav-link" href="{{ route('products.view') }}">Products 
                 </a>
             </li>
-            <li class="nav-item @if(Route::is('category.products.view')) {{'active'}} @endif">
+            <li class="nav-item @if(Route::is('categoryProducts.view')) {{'active'}} @endif">
                 <a class="nav-link" href="{{ route('categoryProducts.view') }}">Category Products 
                 </a>
             </li>
             <li class="nav-item  @if(Route::is('suppliers.view')) {{'active'}} @endif">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('suppliers.view') }}">
                     Suppliers
                 </a>
             </li>

@@ -43,7 +43,7 @@
                     <th>Name</th>
                     <th>Parent</th>
                     <th>Description</th>
-                    <th>Actions</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,11 +53,11 @@
                     <td>{{$categoryProduct->name}}</td>
                     <td>{{$categoryProduct->parent->name}}</td>
                     <td>{{$categoryProduct->description}}</td>
-                    <td>
-                        <a href="{{ route('deleting.categoryProduct', ['id'=>$categoryProduct->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger">
+                    <td class="text-center">
+                        <a href="{{ route('deleting.categoryProduct', ['id'=>$categoryProduct->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger actions-btn">
                             Delete
                         </a>
-                        <a type="button" href="{{ route('edit.categoryProduct.view', ['id' => $categoryProduct->id]) }}" class="btn btn-sm btn-info">
+                        <a type="button" href="{{ route('edit.categoryProduct.view', ['id' => $categoryProduct->id]) }}" class="btn btn-sm btn-info actions-btn">
                             Edit
                         </a>
                     </td>
