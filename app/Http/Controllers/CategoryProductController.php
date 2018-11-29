@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CategoryProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryProductController extends Controller
 {
@@ -22,6 +23,31 @@ class CategoryProductController extends Controller
         ->with('categoryProducts', $categoryProducts);
     }
 
+    public function addingCategory(Request $request){
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->parent_id === 0){
+            $newCategory = CategoryProduct::create([
+                'name' => $request->name,
+                'parent_id' => $newCategory->id,
+                'description' => $request->description
+            ]);
+        }else{
+            $newCategory = CategoryProduct::create([
+                'name' => $request->name,
+                'parent_id' => $request->parent_id,
+                'description' => $request->description
+            ]);
+        }
+
+        Session::flash('success', 'New category for product successfully created');
+        return redirect()->route('categoryProducts.view');
+
+    }
+
     public function editCategoryView($id){
         $title = "Edit Category Product";
         $categoryProduct = CategoryProduct::find($id);
@@ -33,8 +59,29 @@ class CategoryProductController extends Controller
         ->with('categoryProducts', $categoryProducts);
     }
 
-    public function deletingCategoryProduct($id){
+    public function editingCategory(Request $request){
+        $editCategory = CategoryProduct::find($request->id);
+
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $editCategory->name = $request->name;
+        $editCategory->parent_id = $request->parent_id;
+        $editCategory->description = $request->description;
+        $editCategory->save();
         
+        Session::flash('success', 'Category successfully edited');
+        return redirect()->route('categoryProducts.view');
+    }
+
+    public function deletingCategoryProduct($id){
+        $deleteCategory = CategoryProduct::find($id);
+        $deleteCategory->delete();
+
+        Session::flash('success', 'Category successfuly deleted');
+        return redirect()->route('categoryProducts.view');
     }
 
 

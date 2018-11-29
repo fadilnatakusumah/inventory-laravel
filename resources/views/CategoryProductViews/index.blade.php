@@ -12,8 +12,25 @@
         </div>
         {{-- Alert for notification --}}
         @if(Session::has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
             <strong>Success!</strong> {{ Session::get('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        @elseif(Session::has('fail'))
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>Failed!</strong> {{ Session::get('fail')}} <br>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -37,7 +54,7 @@
                     <td>{{$categoryProduct->parent->name}}</td>
                     <td>{{$categoryProduct->description}}</td>
                     <td>
-                        <a href="{{ route('deleting.categoryProduct') }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-warning">
+                        <a href="{{ route('deleting.categoryProduct', ['id'=>$categoryProduct->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger">
                             Delete
                         </a>
                         <a type="button" href="{{ route('edit.categoryProduct.view', ['id' => $categoryProduct->id]) }}" class="btn btn-sm btn-info">
@@ -63,7 +80,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('adding.category_product') }}">
+                <form method="POST" action="{{ route('adding.categoryProduct') }}">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputName">Name <span class="required">*</span></label>
@@ -74,7 +91,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputCategory">Parent <span class="required">*</span></label>
-                        <select required class="form-control" name="category_product_id" id="">
+                        <select required class="form-control" name="parent_id" id="">
                             <option value="0">===Make as Parent===</option>
                             {{-- LOOP CATEGORY --}}
                             @foreach ($categoryProducts as $category)

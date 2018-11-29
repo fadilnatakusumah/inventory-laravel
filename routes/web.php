@@ -75,18 +75,27 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         'as' => 'categoryProducts.view'
         ]
     );
+
+    // add new category
     Route::post('/adding-category-product', [
         'uses' => 'CategoryProductController@addingCategory',
         'as' => 'adding.categoryProduct'
         ]
     );
 
+    // edit category view
     Route::get('/edit-category-product/{id}', [
         'as' => 'edit.categoryProduct.view',
         'uses' => 'CategoryProductController@editCategoryView'
     ]);
 
-    Route::get('/deleting-category-product', [
+    // save edit category
+    Route::post('/editing-category-product/', [
+        'as' => 'editing.categoryProduct',
+        'uses' => 'CategoryProductController@editingCategory'
+    ]);
+
+    Route::get('/deleting-category-product/{id}', [
         'as'=>'deleting.categoryProduct',
         'uses' => 'CategoryProductController@deletingCategoryProduct'
     ]);
