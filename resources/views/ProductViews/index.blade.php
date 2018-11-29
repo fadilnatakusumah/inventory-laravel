@@ -22,15 +22,21 @@
         @elseif(Session::has('fail'))
         <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
             <strong>Failed!</strong> {{ Session::get('fail')}} <br>
-            @foreach ($errors->all() as $err)
-                {{$err}}
-            @endforeach
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         @endif
-        <table class="table">
+        <table class="table text-center">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -66,10 +72,10 @@
                     </td>
                     <td>{{$product->stock}}</td>
                     <td>
-                        <button onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-warning">
+                        <a href="{{ route('deleting.products', ['id' => $product->id]) }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-danger" style="width: 100px;">
                             Delete
-                        </button>
-                        <a type="button" href="{{ route('edit.product.view', ['id' => 1]) }}" class="btn btn-sm btn-info">
+                        </a>
+                        <a type="button" href="{{ route('edit.product.view', ['id' => $product->id]) }}" class="btn btn-sm btn-info" style="width: 100px;">
                             Edit
                         </a>
                     </td>

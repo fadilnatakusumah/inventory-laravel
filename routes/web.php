@@ -13,10 +13,19 @@ use App\Product;
 |
 */
 
-Route::get('/',  [
-    'uses' => 'HomeController@index',
-    'as' => 'home.admin'
-    ]
+Route::get('/',  
+    // [
+    // 'uses' => 'HomeController@index',
+    // 'as' => 'home.admin'
+    // ]
+    function(){
+        return view('welcome');
+    }
+);
+Route::get('/admin',  
+    function(){
+        return redirect()->route('home.view');
+    }
 );
 
 Auth::routes();
@@ -36,11 +45,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         ]
     );
     
-    // Route::get('/add-products', [
-    //     'uses' => 'ProductController@addProductView',
-    //     'as' => 'add.products.view'
-    //     ]
-    // );
+    Route::get('/deleting-products/{id}', [
+        'uses' => 'ProductController@deletingProduct',
+        'as' => 'deleting.products'
+        ]
+    );
     
     Route::post('/adding-product', [
         'uses' => 'ProductController@addingProduct',
@@ -48,24 +57,39 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function(){
         ]
     );
     
-    
     Route::get('/edit-product/{id}', [
         'uses' => 'ProductController@editProductView',
         'as' => 'edit.product.view'
         ]
     );
 
+    Route::post('/editing-product/', [
+        'uses' => 'ProductController@editingProduct',
+        'as' => 'editing.product'
+        ]
+    );
+
     // Category Product
     Route::get('/category-products', [
         'uses' => 'CategoryProductController@index',
-        'as' => 'category.products.view'
+        'as' => 'categoryProducts.view'
         ]
     );
-    Route::post('/adding-category_product', [
+    Route::post('/adding-category-product', [
         'uses' => 'CategoryProductController@addingCategory',
-        'as' => 'adding.category_product'
+        'as' => 'adding.categoryProduct'
         ]
     );
+
+    Route::get('/edit-category-product/{id}', [
+        'as' => 'edit.categoryProduct.view',
+        'uses' => 'CategoryProductController@editCategoryView'
+    ]);
+
+    Route::get('/deleting-category-product', [
+        'as'=>'deleting.categoryProduct',
+        'uses' => 'CategoryProductController@deletingCategoryProduct'
+    ]);
 
    
 

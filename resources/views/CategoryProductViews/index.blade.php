@@ -24,46 +24,28 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Code</th>
-                    <th>Category</th>
-                    <th>Supplier</th>
+                    <th>Parent</th>
                     <th>Description</th>
-                    <th>Weight</th>
-                    <th>Price</th>
-                    <th>Status</th>
-                    <th>Stock</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($categoryProducts as $categoryProduct)
                 <tr>
-                    @foreach ($products as $product)
-                    <td scope="row">{{$product->id}}</td>
-                    <td>{{$product->name}}</td>
-                    <td>{{$product->code}}</td>
-                    <td>{{$product->categoryProduct->name}}</td>
-                    <td>{{$product->supplier->name}}</td>
-                    <td>{{$product->description}}</td>
-                    <td>{{$product->weight}} (gram)</td>
-                    <td>Rp. {{$product->price}}</td>
+                    <td scope="row">{{$categoryProduct->id}}</td>
+                    <td>{{$categoryProduct->name}}</td>
+                    <td>{{$categoryProduct->parent->name}}</td>
+                    <td>{{$categoryProduct->description}}</td>
                     <td>
-                        @if($product->status)
-                            Available
-                        @else
-                            Not Available
-                        @endif
-                    </td>
-                    <td>{{$product->stock}}</td>
-                    <td>
-                        <button onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-warning">
+                        <a href="{{ route('deleting.categoryProduct') }}" onclick="return confirm('Are you sure?')" type="button" class="btn btn-sm btn-warning">
                             Delete
-                        </button>
-                        <a type="button" href="{{ route('edit.product.view', ['id' => 1]) }}" class="btn btn-sm btn-info">
+                        </a>
+                        <a type="button" href="{{ route('edit.categoryProduct.view', ['id' => $categoryProduct->id]) }}" class="btn btn-sm btn-info">
                             Edit
                         </a>
                     </td>
-                    @endforeach
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -95,7 +77,7 @@
                         <select required class="form-control" name="category_product_id" id="">
                             <option value="0">===Make as Parent===</option>
                             {{-- LOOP CATEGORY --}}
-                            @foreach ($categoriesProduct as $category)
+                            @foreach ($categoryProducts as $category)
                             <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach
                         </select>

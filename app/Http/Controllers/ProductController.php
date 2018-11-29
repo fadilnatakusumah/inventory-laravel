@@ -27,40 +27,30 @@ class ProductController extends Controller
         ->with('title', $title)
         ->with('products', $products)
         ->with('suppliers', $suppliers)
-        ->with('categoriesProduct', $categoriesProduct);;
+        ->with('categoriesProduct', $categoriesProduct);
     }
 
     public function addingProduct(Request $req){
-        // $checkRequest = Validator::make($req->all(), [
-        //     'name' => 'required|max:255',
-        //     'category_product_id' => 'required',
-        //     'supplier_id' => 'required',
-        //     'code' => 'required|max:255',
-        //     'description' => 'required',
-        //     'weight' => 'required|numeric|max:255',
-        //     'price' => 'required|numeric|max:255',
-        //     'stock' => 'required|numeric|max:255',
-        //     'status' => 'required'
-        // ]);
-        $this->validate($req, [
-            'name' => 'required|max:255',
+        $checkRequest = Validator::make($req->all(), [
+            'name' => 'required',
             'category_product_id' => 'required',
             'supplier_id' => 'required',
-            'code' => 'required|max:255',
+            'code' => 'required',
             'description' => 'required',
-            'weight' => 'required|numeric|max:255',
-            'price' => 'required|numeric|max:255',
-            'stock' => 'required|numeric|max:255',
+            'weight' => 'required|numeric',
+            'price' => 'required|numeric',
+            'stock' => 'required|numeric',
             'status' => 'required'
         ]);
 
-        // dd($req);
-
-        // if($checkRequest->fails()){
-        //     Session::flash('fail', "Please check all the fields before submit");
-        //     return redirect()->route('products.view')
-        //     ->withErrors('errors');
-        // }else{
+        if($checkRequest->fails()){
+            Session::flash('fail', "Please check all the fields before submit");
+            // return redirect()->route('products.view')
+            // ->withErrors('errors');
+            return redirect()->route('products.view')
+                        ->withErrors($checkRequest)
+                        ->withInput();
+        }else{
             $newProduct = Product::create([
                 'name' => $req->name,
                 'category_product_id' => $req->category_product_id,
@@ -74,17 +64,63 @@ class ProductController extends Controller
             ]);
             Session::flash('success', "Success adding new Product");
             return redirect()->route('products.view');
-        // }
+        }
+    }
+
+    public function deletingProduct($id){
+        $prod = Product::find($id);
+
+        $prod->delete();
+
+        Session::flash('success', 'Product successfuly deleted');
+        return redirect()->back();
 
     }
 
     public function editProductView($id){
         $title = "Edit Products";
         $product = Product::find($id);
+        $categoriesProduct = CategoryProduct::all();
+        $suppliers = Supplier::all();
+
 
         return view('ProductViews.edit')
         ->with('product', $product)
-        ->with('title', $title);
+        ->with('title', $title)
+        ->with('suppliers', $suppliers)
+        ->with('categoriesProduct', $categoriesProduct);
+    }
+
+    public function editingProduct(Request $request){
+        
+        $title = "Edit Products";
+        $product = Product::find($request->id);
+        $product->name = $request->name;
+        $product->code = $request->code;
+        $product->weight = $request->weight;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->category_product_id = $request->category_product_id;
+        $product->supplier_id = $request->supplier_id;
+        $product->status = $request->status;
+        $product->save();
+
+        // $product = Product::where('id', $request->id)->update([
+        //     $product->name => $request->name,
+        //     $product->code => $request->code,
+        //     $product->weight => $request->weight,
+        //     $product->price => $request->price,
+        //     $product->stock => $request->stock,
+        //     $product->category_product_id => $request->category_product_id,
+        //     $product->supplier_id => $request->supplier_id,
+        //     $product->status => $request->status,
+        // ]);
+
+
+
+
+        Session::flash('success', 'Product successfuly edited');
+        return redirect()->route('products.view');
     }
     
 

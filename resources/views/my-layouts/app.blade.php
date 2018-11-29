@@ -13,7 +13,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="{{ route('home.admin') }}">
+        <a class="navbar-brand" href="{{ route('home.view') }}">
             <img class="brand-logo" src="{{asset('images/brand_logo.png')}}" alt="">
             Inventory-Sys</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li class="nav-item @if(Route::is('category.products.view')) {{'active'}} @endif">
-                <a class="nav-link" href="{{ route('category.products.view') }}">Category Products 
+                <a class="nav-link" href="{{ route('categoryProducts.view') }}">Category Products 
                 </a>
             </li>
             <li class="nav-item  @if(Route::is('suppliers.view')) {{'active'}} @endif">

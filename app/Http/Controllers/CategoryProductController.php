@@ -17,8 +17,24 @@ class CategoryProductController extends Controller
         $title = "Category Products";
         
         $categoryProducts = CategoryProduct::all();
-        return view('CategoryProduct.index')
+        return view('CategoryProductViews.index')
+        ->with('title', $title)
         ->with('categoryProducts', $categoryProducts);
+    }
+
+    public function editCategoryView($id){
+        $title = "Edit Category Product";
+        $categoryProduct = CategoryProduct::find($id);
+        $categoryProducts = CategoryProduct::all();
+        
+        return view('CategoryProductViews.edit')
+        ->with('title', $title)
+        ->with('categoryProduct', $categoryProduct)
+        ->with('categoryProducts', $categoryProducts);
+    }
+
+    public function deletingCategoryProduct($id){
+        
     }
 
 
